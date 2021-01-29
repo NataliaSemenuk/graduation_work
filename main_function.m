@@ -16,13 +16,33 @@ for N=1:N_frame
 end
         
 figure; 
-subplot(2, 1, 1);
+subplot(2, 2, 1);
+specgram(signal, 512, 2, kaiser(500,5),475);
+set(gca, 'Clim', [-65 15]);
+title('Input signal spectrogram');
+xlabel('Time, s');
+ylabel('Frequency, Hz');
+set(gca, 'FontName', 'Times New Roman');
+set(gca, 'FontSize', 14);
+subplot(2, 2, 2);
+specgram(output, 512, 2, kaiser(500,5),475);
+set(gca, 'Clim', [-65 15]);
+title('Output signal spectrogram');
+xlabel('Time, s');
+ylabel('Frequency, Hz');
+set(gca, 'FontName', 'Times New Roman');
+set(gca, 'FontSize', 14);
+subplot(2, 2, 3);
 plot(signal);
-subplot(2, 1, 2); 
+title('Input signal');
+xlabel('Time, s');
+ylabel('Amplitude');
+set(gca, 'FontName', 'Times New Roman');
+set(gca, 'FontSize', 14);
+subplot(2, 2, 4); 
 plot(output);
-
-figure; 
-subplot(2, 1, 1);
-specgram(signal);
-subplot(2, 1, 2);
-specgram(output);
+title('Output signal');
+xlabel('Time, s');
+ylabel('Amplitude');
+set(gca, 'FontName', 'Times New Roman');
+set(gca, 'FontSize', 14);
