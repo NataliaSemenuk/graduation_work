@@ -24,7 +24,6 @@ xlabel('Time, s');
 ylabel('Frequency, Hz');
 set(gca, 'FontName', 'Times New Roman');
 set(gca, 'FontSize', 14);
-
 subplot(2, 2, 2);
 specgram(output, 512, 2, kaiser(500,5),475);
 set(gca, 'Clim', [-65 15]);
@@ -33,7 +32,6 @@ xlabel('Time, s');
 ylabel('Frequency, Hz');
 set(gca, 'FontName', 'Times New Roman');
 set(gca, 'FontSize', 14);
-
 subplot(2, 2, 3);
 plot(signal);
 title('Input signal');
@@ -41,7 +39,6 @@ xlabel('Time, s');
 ylabel('Amplitude');
 set(gca, 'FontName', 'Times New Roman');
 set(gca, 'FontSize', 14);
-
 subplot(2, 2, 4); 
 plot(output);
 title('Output signal');
