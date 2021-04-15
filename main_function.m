@@ -15,17 +15,19 @@ bark_sc=1.5:1:K-0.5;
 
 fc = bark2frq(bark_sc);
 [spl, freq_iso] = iso226_rev(0);
-[audio, fs] =  audioread("input_signals/1.mp3");
-audio_input_signal = audio(60000:65000, 1)';
+[audio, fs] =  audioread("input_signals/001.m4a");
+audio_input_signal = audio(:, 1)';
 
 output_signal = gammatoneFast(input_signal, fc);
 corrected_output_signal = output_signal.*1.8;
-create_gammaton_bank_filter_figure(corrected_output_signal, K);
+%create_gammaton_bank_filter_figure(corrected_output_signal, K);
+
+from_digdb_to_spl = 105;
 
 interped_HT = interp1(freq_aud, HT, fc, 'linear');
-interped_spl = interp1(freq_iso, spl-80, fc, 'linear');
-hi = interped_HT-80;
-create_hearing_thresholds_figure(freq_aud, HT, hi, freq_iso, spl, fc, interped_HT, interped_spl);
+interped_spl = interp1(freq_iso, spl-from_digdb_to_spl, fc, 'linear');
+hi = interped_HT-from_digdb_to_spl;
+%create_hearing_thresholds_figure(freq_aud, HT, hi, freq_iso, spl, fc, interped_HT, interped_spl);
 
 audio_output_signal = gammatoneFast(audio_input_signal, fc);
 corrected_audio_output_signal = audio_output_signal.*1.8;
@@ -41,8 +43,15 @@ configure_figure_settings('Static Characteristic', 'Input magnitude, dB', 'Outpu
 hold on;
 
 for M=1:K-1
-    drc_in = [-120 interped_spl(1,M) 0];
-    drc_out = [-120 hi(1,M) 0];  
+    b_out = -20;
+    a_out = -30;
+    b_in = -40;
+    a_in = -50;
+    CL_out = a_out + (b_out-a_out).*rand(1,1);
+    CL_in = a_in + (b_in-a_in).*rand(1,1);
+    
+    drc_in = [-120 interped_spl(1,M) CL_in 0];
+    drc_out = [-120 hi(1,M) CL_out 0];  
     
     plot (drc_in,drc_out);
     
@@ -75,8 +84,8 @@ for M=1:K-1
     processed_audio_output_signal(M, :) = y;
 end
 
-create_characteristic_drc_input_output_figure(drc_in, drc_out);
-create_input_output_subband_signals_figure(corrected_audio_output_signal, processed_audio_output_signal);
-create_input_output_signal_figure(audio_input_signal, synthesized_audio_output_signal);
+%create_characteristic_drc_input_output_figure(drc_in, drc_out);
+%create_input_output_subband_signals_figure(corrected_audio_output_signal, processed_audio_output_signal);
+create_input_output_signal_figure(audio_input_signal, synthesized_audio_output_signal, fs);
 
 audiowrite('output_signal.wav', synthesized_audio_output_signal, fs);

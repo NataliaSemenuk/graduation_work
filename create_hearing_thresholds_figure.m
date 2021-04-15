@@ -1,12 +1,25 @@
 function create_hearing_thresholds_figure(freq_aud, HT, hi, freq_iso, spl, fc, interped_HT, interped_spl)
     figure;
-    subplot(2,1,1); 
-    plot(freq_aud, -1*HT);
-    configure_figure_settings('Audiogram', 'Frequency, Hz', 'Magnitude, dB');
-    xlim ([freq_aud(1) freq_aud(end)]);
-    ylim ([-90 0]);
 
-    subplot(2,1,2); 
+    array = 1:length(freq_aud);
+    hold on;
+    plot (array,-1*HT,'k','LineWidth',2);
+    ylim ([-70 10]);
+    xlim ([array(1) array(end)]);
+
+    plot (array,-1*HT,'ok','LineWidth',2);
+    grid on;
+    set(gca, 'YTickLabel', [70:-10:-10]); %90,80,70,60,50,40,30,20,10,0,-10
+    set(gca, 'XTickLabel',freq_aud);
+    set(gca, 'XTick',array(1):array(end));
+    set(gca, 'FontName', 'Times New Roman');
+    set(gca, 'FontSize', 14);
+    set(gca, 'Clim', [-65 15]);
+    title('Audiogram');
+    xlabel('Frequency, Hz');
+    ylabel('Magnitude, dB');
+
+    figure;
     plot(freq_iso, spl-80);
     configure_figure_settings('Absolute audibility threshold (ISO)', 'Frequency, Hz', 'Magnitude, dB');
     xlim ([freq_iso(1) freq_iso(end)]);
