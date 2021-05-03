@@ -4,6 +4,5 @@ function configure_figure_settings(titleSpecgram, xlabelSpecgram, ylabelSpecgram
     xlabel(xlabelSpecgram);
     ylabel(ylabelSpecgram);
     set(gca, 'FontName', 'Times New Roman');
-    set(gca, 'FontSize', 14);
-    %set(gca, 'FontName', 'Times New Roman');
+    set(gca, 'FontSize', 18);
 end
