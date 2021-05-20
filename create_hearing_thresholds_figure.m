@@ -11,7 +11,7 @@ function create_hearing_thresholds_figure(freq_aud, HT, hi, freq_iso, spl, fc)
     set(gca, 'XTickLabel',freq_aud);
     set(gca, 'XTick',array(1):array(end));
     set(gca, 'Clim', [-65 15]);
-    configure_figure_settings('Аудиограмма', 'Частота, Гц', 'Потеря слуха, дБ');
+    configure_figure_settings('Аудиограмма при 2-ой степени тугоухости', 'Частота, Гц', 'Потеря слуха, дБ');
 
     figure;
     plot(freq_iso, spl-80, 'k', 'LineWidth', 2);
